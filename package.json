@@ -1,0 +1,26 @@
+{
+  "name": "dummy-module",
+  "version": "0.1.0",
+  "description": "Module loader used to port some ES5 code into angular definition",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delbio/dummy-module.git"
+  },
+  "author": "Fabio Del Bene",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/delbio/dummy-module/issues"
+  },
+  "homepage": "https://github.com/delbio/dummy-module#readme",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "jquery-i18n": "recurser/jquery-i18n"
+  }
+}
