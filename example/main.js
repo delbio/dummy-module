@@ -11,6 +11,13 @@ window.onload = function () {
                         'consoleMessage': 'ModuleIdComponent Init ;)'
                     }
                 },
+                {
+                    name: 'other-module-id',
+                    constructor: window.OtherModuleComponent,
+                    args: {
+                        'consoleMessage': 'OtherModuleComponent Init ;)'
+                    }
+                },
             ],
         });
         window.app = new AppShellModule(appShellConfig);

@@ -56,51 +56,61 @@
         function start()
         {
             var head = document.getElementsByTagName('head');
-
             head = head[0];
-
             for (var moduleName in modulesRegister){
-                var module = modulesRegister[moduleName];
+                startModule(head, moduleName, modulesRegister[moduleName]);
+            }
+        }
+        /**
+         * start single module
+         * 
+         * @param {any} head document head tag
+         * @param {String} moduleName module name
+         * @param {any} module module spec
+         */
+        function startModule(head, moduleName, module)
+        {
+            if (!('init' in module)) { return; }   
 
-                if (!('init' in module)) { continue; }
-                
-
-                if ('getStyles' in module)
-                {
-                    //<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
-                    var styles = module.getStyles();
-                    styles.forEach(function(cssElSpec){
-                        var cssEl = window.elt('link', {
-                            href:cssElSpec,
-                            rel:"stylesheet"
-                        });
-                        head.appendChild(cssEl);
+            if ('getStyles' in module)
+            {
+                //<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+                var styles = module.getStyles();
+                styles.forEach(function(cssElSpec){
+                    var cssEl = window.elt('link', {
+                        href:cssElSpec,
+                        rel:"stylesheet"
                     });
-                    
-                }
+                    head.appendChild(cssEl);
+                });
                 
-                if ('getLocalizedTranslationDictionary' in module)
-                {
-                    var dictionary = module.getLocalizedTranslationDictionary();
-                    $.i18n.load(dictionary);
-                }
+            }
+            
+            if ('getLocalizedTranslationDictionary' in module)
+            {
+                var dictionary = module.getLocalizedTranslationDictionary();
+                $.i18n.load(dictionary);
+            }
 
-                if ('getTemplate' in module)
+            if ('getTemplate' in module)
+            {
+                $('#'+moduleName).load(module.getTemplate(), function()
                 {
-                    $('#'+moduleName).load(module.getTemplate(), function(){
-                        module.init();
-                        
-                        var moduleEl = document.getElementById(moduleName);
-                        var resources = moduleEl.querySelectorAll('[data-i18n-text]');
-                        for (var i=0; i < resources.length; i++){
-                            var element = resources[i];
-                            element.appendChild(document.createTextNode($.i18n._(element.dataset.i18nText)));
-                        }
-                        
-                    });
-                } else {
+                    var moduleEl = document.getElementById(moduleName);
+                    if (moduleEl === null){
+                        console.error('Module '+moduleName+' registered with template, but template not connected into root html. Skip init module');
+                        return;
+                    }
                     module.init();
-                }
+                    var resources = moduleEl.querySelectorAll('[data-i18n-text]');
+                    for (var i=0; i < resources.length; i++){
+                        var element = resources[i];
+                        element.appendChild(document.createTextNode($.i18n._(element.dataset.i18nText)));
+                    }
+                    
+                });
+            } else {
+                module.init();
             }
         }
     }
