@@ -2,6 +2,7 @@
 
 window.onload = function () {
         var appShellConfig = new window.AppShellModuleConfig({
+            lang: 'en',
             debug: true,
             modules: [
                 {

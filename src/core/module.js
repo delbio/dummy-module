@@ -8,6 +8,7 @@
      */
     function AppShellModuleConfig(configs) {
         var self = this;
+        self.lang = configs.lang;
         self.debug = configs.debug;
         self.modules = configs.modules;
     }
@@ -20,6 +21,7 @@
         var self = this;
         var _appConfig = appConfig;
         var modulesRegister = {};
+        var moduleTranslater = new window.AppShellModuleTranslater();
         self.getAppShellConfig = getAppShellConfig;
         self.addModule = addModule;
         self.start = start;
@@ -85,12 +87,6 @@
                 });
                 
             }
-            
-            if ('getLocalizedTranslationDictionary' in module)
-            {
-                var dictionary = module.getLocalizedTranslationDictionary();
-                $.i18n.load(dictionary);
-            }
 
             if ('getTemplate' in module)
             {
@@ -102,11 +98,7 @@
                         return;
                     }
                     module.init();
-                    var resources = moduleEl.querySelectorAll('[data-i18n-text]');
-                    for (var i=0; i < resources.length; i++){
-                        var element = resources[i];
-                        element.appendChild(document.createTextNode($.i18n._(element.dataset.i18nText)));
-                    }
+                    moduleTranslater.loadDictionary(module, moduleName, moduleEl, _appConfig.lang, moduleTranslater.applyTranslationIntoModuleTemplate);
                     
                 });
             } else {
