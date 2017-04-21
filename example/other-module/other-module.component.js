@@ -13,7 +13,7 @@
 
         self.getStyles = getStyles;
         self.getTemplate = getTemplate;
-        self.getLocalizedTranslationDictionary = getLocalizedTranslationDictionary;
+        self.getRemoteTranslationDictionary = getRemoteTranslationDictionary;
         self.init = init;
         
         function getStyles()
@@ -27,11 +27,17 @@
         {
             return './other-module/other-module.component.html';
         }
-        function getLocalizedTranslationDictionary()
+        function getRemoteTranslationDictionary(lang)
         {
-            return {
-                'other-module.loaded': 'Loaded ;)'
-            };
+            switch (lang) {
+                case "it":
+                    return 'other-module/locales/other-module.locales.it.json'
+                    break;
+                case "en":
+                default:
+                    return 'other-module/locales/other-module.locales.en.json'
+                    break;
+            }
         }
         function init()
         {
