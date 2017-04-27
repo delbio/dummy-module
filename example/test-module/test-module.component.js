@@ -15,6 +15,7 @@
         self.getTemplate = getTemplate;
         self.getLocalizedTranslationDictionary = getLocalizedTranslationDictionary;
         self.init = init;
+        self.customAction = customAction;
         
         function getStyles()
         {
@@ -36,6 +37,11 @@
         function init()
         {
             console.log(args.consoleMessage);
+        }
+
+        function customAction()
+        {
+            alert('hello world');
         }
     }
 
