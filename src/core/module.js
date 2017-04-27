@@ -24,6 +24,7 @@
         var moduleTranslater = new window.AppShellModuleTranslater();
         self.getAppShellConfig = getAppShellConfig;
         self.addModule = addModule;
+        self.getModule = getModule;
         self.start = start;
 
         init();
@@ -54,6 +55,11 @@
         {
             modulesRegister[name] = new classConstructor(self, args);
         }
+        /**
+         * @param {String} name - name of module
+         * @returns {any}
+         */
+        function getModule(name) { return modulesRegister[name]; }
 
         function start()
         {
