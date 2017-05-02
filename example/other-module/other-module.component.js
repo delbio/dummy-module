@@ -39,9 +39,16 @@
                     break;
             }
         }
-        function init()
+        /**
+         * @param {HtmlDivElement} moduleEl 
+         */
+        function init(moduleEl)
         {
             console.log(args.consoleMessage);
+            var element = moduleEl.querySelector("[data-id='translation-handled-by-js']");
+            var translater = appShell.getModule(appShell.systemModulesNames.translater);
+            element.innerText = translater.translate("other-module.translation-handled-by-js");
+
         }
     }
 

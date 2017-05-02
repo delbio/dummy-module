@@ -1,3 +1,4 @@
 {
-    "other-module.loaded": "Caricato ;)"
+    "other-module.loaded": "Caricato ;)",
+    "other-module.translation-handled-by-js": "other-module - Traduzione"
 }

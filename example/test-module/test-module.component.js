@@ -31,12 +31,20 @@
         function getLocalizedTranslationDictionary()
         {
             return {
-                'test-module.loaded': 'Loaded ;)'
+                'test-module.loaded': 'Loaded ;)',
+                'test-module.translation-handled-by-js': 'test-module - Translation'
             };
         }
-        function init()
+        /**
+         * @param {HtmlDivElement} moduleEl 
+         */
+        function init(moduleEl)
         {
             console.log(args.consoleMessage);
+            var element = moduleEl.querySelector("[data-id='translation-handled-by-js']");
+            var translater = appShell.getModule(appShell.systemModulesNames.translater);
+            element.innerText = translater.translate("test-module.translation-handled-by-js");
+
         }
 
         function customAction()
