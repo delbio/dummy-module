@@ -1,3 +1,4 @@
 {
-    "other-module.loaded": "Loaded ;)"
+    "other-module.loaded": "Loaded ;)",
+    "other-module.translation-handled-by-js": "other-module - Translation"
 }

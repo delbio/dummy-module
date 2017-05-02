@@ -7,6 +7,7 @@
 
         self.loadDictionary = loadDictionary;
         self.applyTranslationIntoModuleTemplate = applyTranslationIntoModuleTemplate;
+        self.translate = translate;
 
         /**
          * 
@@ -49,6 +50,14 @@
                 var element = resources[i];
                 element.appendChild(document.createTextNode($.i18n._(element.dataset.i18nText)));
             }
+        }
+        /**
+         * @param {String} message 
+         * @returns {String} translatedMessage
+         */
+        function translate(message)
+        {
+           return $.i18n._(message);
         }
     }
     window.AppShellModuleTranslater = AppShellModuleTranslater;

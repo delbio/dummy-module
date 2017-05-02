@@ -21,7 +21,11 @@
         var self = this;
         var _appConfig = appConfig;
         var modulesRegister = {};
-        var moduleTranslater = new window.AppShellModuleTranslater();
+
+        self.systemModulesNames = {
+            'translater': 'translater'
+        };
+
         self.getAppShellConfig = getAppShellConfig;
         self.addModule = addModule;
         self.getModule = getModule;
@@ -31,6 +35,7 @@
 
         function init()
         {
+            addModule(self.systemModulesNames.translater, window.AppShellModuleTranslater);
             _appConfig.modules.forEach(function (module) {
                 if ('args' in module){
                     addModuleWithArgs(module.name, module.constructor, module.args);
@@ -103,7 +108,8 @@
                         console.error('Module '+moduleName+' registered with template, but template not connected into root html. Skip init module');
                         return;
                     }
-                    module.init();
+                    module.init(moduleEl);
+                    var moduleTranslater = self.getModule(self.systemModulesNames.translater);
                     moduleTranslater.loadDictionary(module, moduleName, moduleEl, _appConfig.lang, moduleTranslater.applyTranslationIntoModuleTemplate);
                     
                 });
