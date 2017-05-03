@@ -1,6 +1,6 @@
 {
   "name": "dummy-module",
-  "version": "0.1.5",
+  "version": "0.2.1",
   "description": "Module loader used to port some ES5 code into angular definition",
   "main": "index.js",
   "directories": {
