@@ -11,6 +11,9 @@
         self.lang = configs.lang;
         self.debug = configs.debug;
         self.modules = configs.modules;
+        self.loaders = {
+            'template': ('loaders' in configs && 'template' in configs.loaders) ? configs.loaders.template : new window.RemoteTemplateLoader()
+        };
     }
 
     /**
@@ -35,7 +38,7 @@
 
         function init()
         {
-            addModule(self.systemModulesNames.translater, window.AppShellModuleTranslater);
+            addModuleWithArgs(self.systemModulesNames.translater, window.AppShellModuleTranslater, _appConfig.debug);
             _appConfig.modules.forEach(function (module) {
                 if ('args' in module){
                     addModuleWithArgs(module.name, module.constructor, module.args);
@@ -101,11 +104,13 @@
 
             if ('getTemplate' in module)
             {
-                $('#'+moduleName).load(module.getTemplate(), function()
+                var templateLoader = _appConfig.loaders['template'];
+
+                templateLoader.loadTemplate(module.getTemplate(), moduleName, function()
                 {
                     var moduleEl = document.getElementById(moduleName);
                     if (moduleEl === null){
-                        console.error('Module '+moduleName+' registered with template, but template not connected into root html. Skip init module');
+                        console.error('Module '+domElementSelector+' registered with template, but template not connected into root html. Skip init module');
                         return;
                     }
                     module.init(moduleEl);

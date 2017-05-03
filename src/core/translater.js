@@ -1,13 +1,18 @@
 (function (window, document) {
     'use strict';
 
-    function AppShellModuleTranslater()
+    function AppShellModuleTranslater(appShell,debug)
     {
         var self = this;
 
         self.loadDictionary = loadDictionary;
         self.applyTranslationIntoModuleTemplate = applyTranslationIntoModuleTemplate;
         self.translate = translate;
+
+        function isDebugMode()
+        {
+            return (debug && debug === true);
+        }
 
         /**
          * 
@@ -30,7 +35,7 @@
             {
                 var jsonDictionaryPath = module.getRemoteTranslationDictionary(lang);
                 $.getJSON(jsonDictionaryPath, function(dictionary) {
-                    console.log(dictionary);
+                    if (isDebugMode()) { console.log(dictionary); }
                     $.i18n.load(dictionary);
                     onLoadFn(module, moduleName, domElement);
                 });

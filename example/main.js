@@ -1,9 +1,16 @@
 "use strict";
 
 window.onload = function () {
+
+        var globalVariableTemplateLoader = new window.GlobalVariableTemplateLoader(window[ 'templateCache' ]);
+        var remoteTemplateLoader = new window.RemoteTemplateLoader();
+
         var appShellConfig = new window.AppShellModuleConfig({
             lang: 'en',
-            debug: true,
+            debug: false,
+            loaders: {
+                'template': remoteTemplateLoader
+            },
             modules: [
                 {
                     name: 'module-id',
